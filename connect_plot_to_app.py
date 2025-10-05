@@ -55,7 +55,6 @@ def run_app(frame=1, total_frames=24):
         # Plot known junk positions at the current time step
         data_junk = final_df[(final_df['time'] == (frame))&(final_df['classtype']=='junk')]
         ax.scatter(data_junk.coordinate_x, data_junk.coordinate_y, data_junk.coordinate_z, c='red', marker = '^')
-        ax.set_title(f'Space traffic control, time={frame}')
         ax.set_xlabel('')
         ax.set_ylabel('')
         ax.set_zlabel('')
