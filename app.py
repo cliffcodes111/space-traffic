@@ -59,7 +59,7 @@ def show_plot():
                         const doc = parser.parseFromString(html, 'text/html');
                         document.getElementById('plot-img').innerHTML = doc.getElementById('plot-img').innerHTML;
                         document.getElementById('frame-label').innerHTML = doc.getElementById('frame-label').innerHTML;
-                        setTimeout(function() {{ animateFrame(frameNum + 1); }}, 500);
+                        setTimeout(function() {{ animateFrame(frameNum + 1); }}, 200);
                     }});
             }}
             function refreshAnimation() {{
