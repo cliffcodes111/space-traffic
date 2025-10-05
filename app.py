@@ -85,9 +85,8 @@ def show_plot():
         <div class="container">
             <div class="header-row">
                 <span class="orbit-title">Orbit-Watch interface</span>
-                <img src="/static/orbit-watch-logo.png" alt="Orbit-Watch Logo" class="orbit-logo" />
             </div>
-            <h2>Today's LEO traffic</h2>
+            <div style="font-family: 'Montserrat', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #82c7a5ff; margin-bottom: 20px;">Space Traffic Control time = {frame}</div>
             <div class="frame-controls">
                 <span id="frame-label">Frame {frame} of {total_frames}</span>
                 <button id="runBtn" type="button" onclick="runAnimation();">Run</button>
