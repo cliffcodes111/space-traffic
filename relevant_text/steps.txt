@@ -1,0 +1,16 @@
+steps for the hack
+
+1. set up azure environment (done)
+2. decide on challenge (done)
+3. test out mapping packages (done)
+3.5 make pretty map (done)
+4. create flying objects (done)
+5. project flying objects onto map (done)
+6. create differentiated flying objects on map (done)
+6.5 integrate real NASA data into flying objects on map
+7. push to github
+8. set up app interface
+9. link map with flying objects to app interface 
+10. put llm chatbot in app
+11. make presentation with business case
+12. upload presentation
