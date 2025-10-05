@@ -42,7 +42,7 @@ def run_app(frame=1, total_frames=24):
         x = 6370 * np.outer(np.cos(u), np.sin(v))
         y = 6370 * np.outer(np.sin(u), np.sin(v))
         z = 6370 * np.outer(np.ones(np.size(u)), np.cos(v))
-        ax.plot_wireframe(x, y, z, color='gray', linewidth=0.5, alpha=0.5)
+        ax.plot_wireframe(x, y, z, color='black', linewidth=0.5, alpha=0.5)
         fig.patch.set_facecolor('#23272a')
         ax.set_facecolor('#23272a')
 
@@ -74,6 +74,4 @@ def run_app(frame=1, total_frames=24):
         return f"<img src='data:image/png;base64,{data}'/>", total_frames
     except Exception as e:
         return f"<div style='color:red;'>Error generating plot: {e}</div>", total_frames
-
-    return "<div>No plot generated.</div>", total_frames
 
