@@ -85,7 +85,7 @@ def show_plot():
         <div class="container">
             <div class="header-row">
                 <span class="orbit-title">Orbit-Watch interface</span>
-                <img src="orbit-watch-logo.png" alt="Orbit-Watch Logo" class="orbit-logo" />
+                <img src="/static/orbit-watch-logo.png" alt="Orbit-Watch Logo" class="orbit-logo" />
             </div>
             <h2>Today's LEO traffic</h2>
             <div class="frame-controls">
@@ -111,7 +111,6 @@ def show_plot():
                     </div>
                 </div>
             </div>
-            <div id="plot-img">{animation_html}</div>
             <div class="chatbot-container">
                 <div class="chatbot-title">Orbit-Watch Chatbot</div>
                 <form class="chatbot-form" onsubmit="handleChatbotSubmit(event)">
