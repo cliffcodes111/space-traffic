@@ -70,7 +70,7 @@ class satellite_database:
             velocity = row['velocity']
 
             point_object = satellite_object(name, description, coords, classtype, direction, velocity)
-            point_object.move_stationary(time = 1)
+            point_object.move(time = 1)
             new_coords = point_object.coords
             new_direction = point_object.direction
 

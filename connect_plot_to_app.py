@@ -11,7 +11,7 @@ from io import BytesIO
 import base64
 
 
-def run_app(frame=1, total_frames=50):
+def run_app(frame=1, total_frames=24):
     try:
         dataset = satellite_database(input_mode = "random_generated", number = 100, input_data = pd.DataFrame)
     except Exception as e:
@@ -33,8 +33,8 @@ def run_app(frame=1, total_frames=50):
         final_df = final_df[final_df['coordinate_y']<10000]
         final_df = final_df[final_df['coordinate_z']<10000]
 
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
+        fig = plt.figure(facecolor='#23272a')
+        ax = fig.add_subplot(111, projection='3d', facecolor='#23272a')
 
         # Draw contour sphere with radius 6370 (wiremesh)
         u = np.linspace(0, 2 * np.pi, 100)
@@ -43,6 +43,8 @@ def run_app(frame=1, total_frames=50):
         y = 6370 * np.outer(np.sin(u), np.sin(v))
         z = 6370 * np.outer(np.ones(np.size(u)), np.cos(v))
         ax.plot_wireframe(x, y, z, color='gray', linewidth=0.5, alpha=0.5)
+        fig.patch.set_facecolor('#23272a')
+        ax.set_facecolor('#23272a')
 
         # Plot satellite positions at the current time step
         data_satellite = final_df[(final_df['time'] == (frame))&(final_df['classtype']=='fixed')]

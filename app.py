@@ -13,51 +13,60 @@ def show_plot():
     animation_html, total_frames = run_app(frame=frame)
     prev_frame = max(1, frame - 1)
     next_frame = min(total_frames, frame + 1)
+
     html = f"""
     <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet'>
         <style>
-            body {{
-                background-color: #23272a;
-                color: #fff;
-                font-family: 'Montserrat', Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                min-height: 100vh;
-            }}
-            .container {{
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-            }}
-            h2 {{
-                font-family: 'Montserrat', Arial, sans-serif;
-                font-size: 20px;
-                margin-bottom: 20px;
-                font-weight: 700;
-                letter-spacing: 1px;
-            }}
-            .frame-controls {{
-                margin: 20px;
-            }}
-            .frame-controls button {{
-                font-size: 16px;
-                padding: 8px 16px;
-                margin: 0 10px;
-                background: #7289da;
-                color: #fff;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }}
-            .frame-controls span {{
-                font-size: 16px;
-                margin: 0 10px;
-            }}
+            body {{background-color: #23272a; color: #fff; font-family: 'Montserrat', Arial, sans-serif; margin: 0; padding: 0; min-height: 100vh;}}
+            .container {{display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;}}
+            h2 {{font-family: 'Montserrat', Arial, sans-serif; font-size: 20px; margin-bottom: 20px; font-weight: 700; letter-spacing: 1px;}}
+            .frame-controls {{margin: 20px;}}
+            .frame-controls button {{font-size: 16px; padding: 8px 16px; margin: 0 10px; background: #7289da; color: #fff; border: none; border-radius: 4px; cursor: pointer;}}
+            .frame-controls span {{font-size: 16px; margin: 0 10px;}}
         </style>
+        <script type="text/javascript">
+            let running = false;
+            let currentFrame = {frame};
+            const totalFrames = {total_frames};
+            function runAnimation() {{
+                i (running) {{ return; }}
+                running = true;
+                document.getElementById('runBtn').disabled = true;
+                animateFrame(currentFrame);
+            }}
+            function animateFrame(frameNum) {{
+                if (!running || frameNum > totalFrames) {{
+                    running = false;
+                    document.getElementById('runBtn').disabled = false;
+                    document.getElementById('refreshBtn').disabled = false;
+                    return;
+                }}
+                fetch('/?frame=' + frameNum)
+                    .then(response => response.text())
+                    .then(html => {{
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        document.getElementById('plot-img').innerHTML = doc.getElementById('plot-img').innerHTML;
+                        document.getElementById('frame-label').innerHTML = doc.getElementById('frame-label').innerHTML;
+                        setTimeout(function() {{ animateFrame(frameNum + 1); }}, 500);
+                    }});
+            }}
+            function refreshAnimation() {{
+                running = false;
+                document.getElementById('runBtn').disabled = false;
+                document.getElementById('refreshBtn').disabled = true;
+                fetch('/?frame=1')
+                    .then(response => response.text())
+                    .then(html => {{
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        document.getElementById('plot-img').innerHTML = doc.getElementById('plot-img').innerHTML;
+                        document.getElementById('frame-label').innerHTML = doc.getElementById('frame-label').innerHTML;
+                    }});
+            }}
+        </script>
     </head>
     <body>
         <div class="container">
@@ -67,13 +76,15 @@ def show_plot():
                     <input type="hidden" name="frame" value="{prev_frame}">
                     <button type="submit">Previous</button>
                 </form>
-                <span>Frame {frame} of {total_frames}</span>
+                <span id="frame-label">Frame {frame} of {total_frames}</span>
                 <form method="get" style="display:inline;">
                     <input type="hidden" name="frame" value="{next_frame}">
                     <button type="submit">Next</button>
                 </form>
+                <button id="runBtn" type="button" onclick="runAnimation();">Run</button>
+                <button id="refreshBtn" type="button" onclick="refreshAnimation();" disabled>Refresh</button>
             </div>
-            {animation_html}
+            <div id="plot-img">{animation_html}</div>
         </div>
     </body>
     </html>
