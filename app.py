@@ -1,3 +1,5 @@
+
+import os
 from flask import Flask, render_template_string
 from connect_plot_to_app import run_app
 
@@ -5,9 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def show_plot():
-    # Get the animation HTML from connect_plot_to_app.py
     animation_html = run_app()
-    # Add styling for dark background and Montserrat font
     html = f"""
     <html>
     <head>
@@ -45,9 +45,9 @@ def show_plot():
     </body>
     </html>
     """
-    print("access the app on http://<20.162.192.119>:5000")
     return render_template_string(html)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
     
