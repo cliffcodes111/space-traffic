@@ -73,12 +73,14 @@ def run_app():
             # Embed the result in the html output.
             data = base64.b64encode(buf.getbuffer()).decode("ascii")
             time.sleep(1)
-            return ax,  f"<img src='data:image/png;base64,{data}'/>"
+            return ax, 
         
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
         ani = FuncAnimation(fig, update_graph, frames=2, interval=40, blit=False)
-        HTML(ani.to_jshtml())
+        final_fig = HTML(ani.to_jshtml())
+        print(final_fig)
+        return  f"<img src='data:image/png;base64,{final_fig}'/>"
 
 if __name__ == "__main__":
     run_app()
